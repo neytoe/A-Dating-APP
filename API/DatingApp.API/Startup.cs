@@ -43,6 +43,7 @@ namespace API
             });
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +60,11 @@ namespace API
 
             app.UseRouting();
 
+            app.UseCors(policy => policy.AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost:4200"));
+
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
