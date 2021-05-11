@@ -27,6 +27,7 @@ namespace DatingApp.Infrastructure.Services
                 await _dataContext.SaveChangesAsync();
             }
         }
+
         public async Task<bool> Exist(int? id)
         {
             var entity = await entitySet.FindAsync(id);
@@ -67,5 +68,6 @@ namespace DatingApp.Infrastructure.Services
             _dataContext.AddRange(t);
             await _dataContext.SaveChangesAsync();
         }
+
     }
 }

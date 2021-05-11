@@ -13,6 +13,7 @@ namespace DatingApp.Core.Map
         public MapProfile()
         {
             CreateMap<createUserDto, AppUser>();
+            CreateMap<RegisterUserDto, AppUser>();
         }
     }
 }

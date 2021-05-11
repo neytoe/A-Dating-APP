@@ -8,5 +8,6 @@ namespace DatingApp.Core.Interfaces
 {
     public interface IUserRepository: IRepository<AppUser>
     {
+        Task<bool> userExists(string username);
     }
 }

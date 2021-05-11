@@ -2,6 +2,7 @@
 using API.Data;
 using DatingApp.Core;
 using DatingApp.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,17 @@ namespace DatingApp.Infrastructure.Services
 {
     public class UserRepository : BaseRepository<AppUser>, IUserRepository
     {
+       
+        private readonly DbSet<AppUser> entitySet;
         public UserRepository(DataContext dataContext) : base(dataContext)
         {
+           
+            entitySet = dataContext.Set<AppUser>();
+        }
+
+        public async Task<bool> userExists(string username)
+        {
+            return await entitySet.AnyAsync(x => username.ToLower() == x.UserName.ToLower());
         }
     }
 }
