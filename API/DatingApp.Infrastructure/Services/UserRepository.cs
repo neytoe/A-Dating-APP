@@ -25,5 +25,10 @@ namespace DatingApp.Infrastructure.Services
         {
             return await entitySet.AnyAsync(x => username.ToLower() == x.UserName.ToLower());
         }
+
+        public async Task<AppUser> GetUser (string username)
+        {
+            return await entitySet.SingleOrDefaultAsync(x => x.UserName.ToLower() == username.ToLower());
+        }
     }
 }

@@ -41,5 +41,27 @@ namespace DatingApp.API.Controllers
            await _userRepository.Save(user);
             return user;
         }
+
+        [HttpPost("Login")]
+        public async Task<ActionResult<AppUser>> Login (LoginDto loginUser)
+        {
+            var user = await _userRepository.GetUser(loginUser.Username);
+
+            if (user == null) return Unauthorized("Invalid Username");
+            //get the password salt of the user
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+
+            //use the salt gotten to get the password hash of the user that wnats to login
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginUser.Password));
+
+            //compare the password hash of the user in the database with the one for the user that wants to login 
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
+
+            }
+
+            return user;
+        }
     }
 }

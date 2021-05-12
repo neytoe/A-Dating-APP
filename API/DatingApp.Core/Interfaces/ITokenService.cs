@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatingApp.Core.Interfaces
 {
-    public interface IUserRepository: IRepository<AppUser>
+    interface ITokenService
     {
-        Task<bool> userExists(string username);
-
-        Task<AppUser> GetUser(string username);
     }
 }
