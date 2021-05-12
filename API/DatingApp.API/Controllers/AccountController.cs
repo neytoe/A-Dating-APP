@@ -18,16 +18,19 @@ namespace DatingApp.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(IUserRepository userRepository, IMapper mapper)
+        public AccountController(IUserRepository userRepository, IMapper mapper, ITokenService tokenService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<AppUser>> Register (RegisterUserDto newuser)
+        public async Task<ActionResult<UserDto>> Register (RegisterUserDto newuser)
         {
             if (await _userRepository.userExists(newuser.Username)) return BadRequest("Username is taken");
 
@@ -39,11 +42,16 @@ namespace DatingApp.API.Controllers
             user.PasswordSalt = hmac.Key;
 
            await _userRepository.Save(user);
-            return user;
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.Createtoken(user)
+            };
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<AppUser>> Login (LoginDto loginUser)
+        public async Task<ActionResult<UserDto>> Login (LoginDto loginUser)
         {
             var user = await _userRepository.GetUser(loginUser.Username);
 
@@ -61,7 +69,11 @@ namespace DatingApp.API.Controllers
 
             }
 
-            return user;
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.Createtoken(user)
+            }; 
         }
     }
 }

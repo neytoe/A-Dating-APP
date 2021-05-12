@@ -2,6 +2,7 @@
 using DatingApp.Core;
 using DatingApp.Core.DTOs;
 using DatingApp.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,6 +26,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetAllUsers")]
+        [AllowAnonymous]
         public async Task<IEnumerable<AppUser>> GetUsers()
         {
             var users = await _userRepository.FindAll();
@@ -40,6 +42,8 @@ namespace API.Controllers
             return newuser;
 
         }
+
+        [Authorize]
 
         [HttpGet("{id}")]
         public async Task<AppUser> GetUser(int id)

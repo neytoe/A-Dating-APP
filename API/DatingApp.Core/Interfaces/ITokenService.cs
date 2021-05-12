@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DatingApp.Core.Interfaces
 {
-    interface ITokenService
+    public interface ITokenService
     {
+        string Createtoken(AppUser user);
     }
 }
