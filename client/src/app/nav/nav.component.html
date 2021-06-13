@@ -15,17 +15,30 @@
           <a class="nav-link " href="#" tabindex="-1">Messages</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#" (click)="logout" tabindex="-1">Logout</a>
+          <a class="nav-link " href="#" (click)="logout()" tabindex="-1">Logout</a>
         </li>
       </ul>
 
-      <div class="dropdown" *ngIf="loggedIn">
-          <a id="dropdownmenulink" class="dropdown-toggle text-light">Welcome {{model.username}}</a>
-          <div class="dropdown-menu" aria-labelledby="dropdownmenulink">
+      <!-- <div class="dropdown" *ngIf="loggedIn" dropdown>
+          <a class="dropdown-toggle text-light">Welcome {{model.username}}</a>
+          <div class="dropdown-menu"  *dropdownMenu>
             <a class="dropdwon-item">Edit Profile</a>
-            <a class="dropdwon-item" (click)="logout()">Logout</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="logout()">Logout</a>
           </div>
+      </div> -->
+
+      <div class="dropdown" *ngIf="loggedIn" dropdown>
+        <a class="dropdown-toggle text-light" dropdownToggle>
+          Welcome {{model.username}}
+        </a>
+
+        <div class="dropdown-menu" *dropdownMenu>
+          <a class="dropdown-item" >Edit Profile</a>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
+        </div>
       </div>
+
       <form *ngIf="!loggedIn" #loginForm="ngForm" class="d-flex" (ngSubmit)='login()'
       autocomplete="off">
         <input

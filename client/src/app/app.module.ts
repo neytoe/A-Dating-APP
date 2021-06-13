@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule } from '@angular/forms';
 
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +19,9 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    BsDropdownModule.forRoot(),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
