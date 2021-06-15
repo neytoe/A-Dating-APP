@@ -12,13 +12,11 @@ import { Observable } from 'rxjs';
 
 export class NavComponent implements OnInit {
   model: any = {}
-  currentUser$: Observable<User>;
 
 
-  constructor(private accountsService: AccountsService) { }
+  constructor(public accountsService: AccountsService) { }
 
   ngOnInit(): void {
-    this.currentUser$ = this.accountsService.currentUser$;
   }
 
   login() {
